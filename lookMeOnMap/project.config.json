@@ -27,7 +27,15 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "1005: 顶部搜索框的搜索结果页",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": "1005"
+				}
+			]
 		}
 	}
 }
