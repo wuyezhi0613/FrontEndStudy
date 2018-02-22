@@ -1,54 +1,41 @@
 //index.js
 //获取应用实例
-const app = getApp()
+
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    idChooseLocation: true, // 是否进行地址选择
+    location: null // 选择好的地址信息
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
+
+  onLoad: function (opts) {
+    // console.log(opts);
   },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
+
+
+  onReady: function () {
+    console.log('ready');
+    
+  },
+  onShow: function () {
+    if (this.data.idChooseLocation){
+      wx.chooseLocation({
+        success: (res) => {
           this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
+            location: res,
+            idChooseLocation: false
+          });
+        },
+        fail: function (res) { },
+        complete: function (res) { },
+      });
+    }else{
+
     }
+    
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  }
+  onHide: function () {
+
+  },
+  onUnload: function () { },
 })
