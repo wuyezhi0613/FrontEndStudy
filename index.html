@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./main.css">
+    <link rel="manifest" href="./manifest.json">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Hello PWA</h3>
+    <script>
+        if(navigator.serviceWorker !== null) {
+            navigator.serviceWorker.register("sw.js").then(function(registration){
+                console.log("registered event at scope: ", registration.scope);
+            })
+        }
+    </script>
+</body>
+</html>
