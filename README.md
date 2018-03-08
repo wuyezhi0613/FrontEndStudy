@@ -126,7 +126,7 @@ if (navigator.serviceWorker != null) {
 
 ## 定义要缓存的内容
 
-在根目录新建sw.js文件，并写入乳腺内容。
+在根目录新建sw.js文件，并写入如下内容。
 
 ```js
 let cacheStorageKey = 'pwa-1'; // 用于更新SW
