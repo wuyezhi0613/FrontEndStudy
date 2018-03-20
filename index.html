@@ -19,13 +19,14 @@
             if ("WebSocket" in window) {
                 ws = new WebSocket("ws://localhost:8181");
                 ws.onopen = function (e) {
-                    alert('websocket has connected');
+                    console.log('websocket has connected');
                 }
                 ws.onmessage = function (res) {
-                    alert(res.data);
+                    // console.log(res);
+                    console.log(JSON.parse(res.data));
                 }
                 ws.onclose = function (e) {
-                    alert('websocket has disconnected')
+                    console.log('websocket has disconnected');
                 }
             }
         }

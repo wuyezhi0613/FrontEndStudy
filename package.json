@@ -19,6 +19,7 @@
   "homepage": "https://github.com/guzhongren/WebStudy#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "circular-json": "^0.5.1",
     "ws": "^5.0.0"
   }
 }
