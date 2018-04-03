@@ -14,3 +14,5 @@
   * 利用WebSocket,将定时从[flightradar24](https://www.flightradar24.com/)网站上获取的实时数据推送到前端进行三维GIS下的实时航班展示查询。
 * [React-Redux](https://github.com/guzhongren/WebStudy/tree/redux)
   * Redux 练习 Demo
+* [Jest测试](https://github.com/guzhongren/WebStudy/tree/jest)
+  * 使用book的jest测试框架，理解Jest测试流程及配置信息。
