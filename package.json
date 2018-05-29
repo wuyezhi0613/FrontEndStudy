@@ -1,5 +1,5 @@
 {
-  "name": "WebStudy",
+  "name": "webstudy",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -24,7 +24,21 @@
     "ws": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "live-server": "^1.2.0"
+    "babel-eslint": "^8.2.3",
+    "live-server": "^1.2.0",
+    "standard": "^11.0.1"
+  },
+  "standard": {
+    "globals": [
+      "console",
+      "Errow",
+      "WebSocket",
+      "Cesium"
+    ],
+    "parser": "babel-eslint",
+    "ignore": [
+      "/lib/",
+      "/obj/"
+    ]
   }
 }
