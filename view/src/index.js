@@ -1,22 +1,20 @@
-let ws
-let viewer
+let ws, viewer
 
-contnectWS().then((ws) => {
-  return ws
+getViewer().then(viewer => {
+  return viewer
 }, err => {
   if (err) {
-    console.log('websocket 链接出错')
+    console.errpr(err)
+    return null
   }
-}).then(res => {
-  return getViewer()
 }).then(viewer => {
-  return AddModal(viewer)
+  connectWS()
 })
 
 /**
  * 连接Websocket
  */
-function contnectWS () {
+function connectWS () {
   return new Promise((resolve, reject) => {
     if ('WebSocket' in window) {
       ws = new WebSocket('ws://localhost:8181')
@@ -24,7 +22,8 @@ function contnectWS () {
         console.log('websocket has connected')
       }
       ws.onmessage = function (res) {
-        console.log(JSON.parse(res.data))
+        let modalData = JSON.parse(res.data)
+        AddModals(modalData)
       }
       ws.onclose = function (e) {
         console.log('websocket has disconnected')
@@ -66,20 +65,28 @@ function getViewer () {
 }
 
 /**
- * 添加模型
+ * 添加多个模型
+ * @param {Array[Array]} modals 模型集信息
+ */
+function AddModals (modals) {
+  viewer.entities.removeAll()
+  for (let index in modals) {
+    AddModal(modals[index])
+  }
+}
+/**
+ * 添加单个模型
  * @param {Cesium.Ｖiewer} viewer 三维球视图
  */
-function AddModal (viewer) {
+function AddModal (modalInfo) {
   // modal 位置
-  var position = new Cesium.Cartesian3(-1371108.6511167218, -5508684.080096612,
-    2901825.449865087
-  )
-  var heading = Cesium.Math.toRadians(180)
-  var pitch = Cesium.Math.toRadians(2)
-  var roll = Cesium.Math.toRadians(-6)
-  var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
-  var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr)
-  var entity = viewer.entities.add({
+  let position = new Cesium.Cartesian3.fromDegrees(modalInfo[2], modalInfo[1], modalInfo[4])
+  let heading = Cesium.Math.toRadians(modalInfo[3])
+  let pitch = Cesium.Math.toRadians(2)
+  let roll = Cesium.Math.toRadians(-6)
+  let hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
+  let orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr)
+  let entity = viewer.entities.add({
     name: 'truck',
     position: position,
     orientation: orientation,

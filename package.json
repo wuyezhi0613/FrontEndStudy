@@ -35,6 +35,7 @@
       "WebSocket",
       "Cesium"
     ],
+    "properties": false,
     "parser": "babel-eslint",
     "ignore": [
       "/lib/",
