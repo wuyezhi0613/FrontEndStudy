@@ -3,7 +3,7 @@
 ## 获取
 
 ```shell
-git clone -b websocket https://github.com/guzhongren/WebStudy.git
+git clone -b websocket https://github.com/guzhongren/FrontEndStudy.git
 ```
 
 ## 安装依赖
@@ -15,19 +15,23 @@ npm install # yarn
 ## 启动服务端
 
 ```shell
-npm run dev
+npm run server # yarn run server
 ```
 
 ## 启动浏览器
 
-* 需提前安装live-server
-
 ```shell
-npm install -g live-server
+npm run browser
 ```
 
-* 以9000端口为例启动
+### Cesium地址
 
 ```shell
-live-server --port=9000
+http://127.0.0.1:40765/view/
+````
+
+### websocket地址
+
+```shell
+http://127.0.0.1:40765/test/websocket.html  # 看控制台信息
 ```

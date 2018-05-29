@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./server.js"
+    "server": "node ./server.js",
+    "browser": "live-server --open=./view/ "
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
     "axios": "^0.18.0",
     "circular-json": "^0.5.1",
     "ws": "^5.0.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.0"
   }
 }
