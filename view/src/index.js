@@ -17,11 +17,12 @@ getViewer().then(viewer => {
 function connectWS () {
   return new Promise((resolve, reject) => {
     if ('WebSocket' in window) {
-      ws = new WebSocket('ws://localhost:8181')
+      ws = new WebSocket(`ws://${window.location.hostname}:8181`)
       ws.onopen = function (e) {
         console.log('websocket has connected')
       }
       ws.onmessage = function (res) {
+        console.log('get data.....')
         let modalData = JSON.parse(res.data)
         AddModals(modalData)
       }
@@ -80,23 +81,26 @@ function AddModals (modals) {
  */
 function AddModal (modalInfo) {
   // modal 位置
-  let position = new Cesium.Cartesian3.fromDegrees(modalInfo[2], modalInfo[1], modalInfo[4])
-  let heading = Cesium.Math.toRadians(modalInfo[3])
-  let pitch = Cesium.Math.toRadians(2)
-  let roll = Cesium.Math.toRadians(-6)
-  let hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
-  let orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr)
-  let entity = viewer.entities.add({
-    name: 'truck',
-    position: position,
-    orientation: orientation,
-    model: {
-      uri: '../lib/Cesium-1.45/Apps/SampleData/models/CesiumGround/Cesium_Ground.gltf',
-      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-      minimumPixelSize: 128,
-      maximumScale: 20,
-      scale: 8.0
-    }
-  })
-  viewer.trackedEntity = entity
+  if (modalInfo[0] & modalInfo[1] & modalInfo[2] & modalInfo[3] & modalInfo[4]) {
+    let position = new Cesium.Cartesian3.fromDegrees(modalInfo[2], modalInfo[1], modalInfo[4])
+    let heading = Cesium.Math.toRadians(modalInfo[3] - 90)
+    let pitch = Cesium.Math.toRadians(2)
+    let roll = Cesium.Math.toRadians(0)
+    let hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
+    let orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr)
+    let entity = viewer.entities.add({
+      name: 'truck',
+      position: position,
+      orientation: orientation,
+      model: {
+        uri: '../lib/Cesium-1.45/Apps/SampleData/models/CesiumGround/Cesium_Ground.gltf',
+        // heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        // minimumPixelSize: 128,
+        // maximumScale: 20,
+        // scale: 8
+      }
+    })
+    viewer.trackedEntity = entity
+    // entity = null
+  }
 }

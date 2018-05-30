@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "server": "node ./server.js",
-    "browser": "live-server --open=./view/ "
+    "browser": "live-server --open=./view/"
   },
   "repository": {
     "type": "git",
