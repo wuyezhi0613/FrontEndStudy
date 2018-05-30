@@ -93,11 +93,12 @@ function AddModal (modalInfo) {
       position: position,
       orientation: orientation,
       model: {
-        uri: '../lib/Cesium-1.45/Apps/SampleData/models/CesiumGround/Cesium_Ground.gltf',
+        uri: '../lib/Cesium-1.45/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf',
+        // uri: '../../modals/1505010850_14112.dae.gltf'
         // heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
         // minimumPixelSize: 128,
         // maximumScale: 20,
-        // scale: 8
+        scale: 80
       }
     })
     viewer.trackedEntity = entity

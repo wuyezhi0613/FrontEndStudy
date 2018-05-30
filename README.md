@@ -1,5 +1,7 @@
 # 基于WebSocket的实时数据传输
 
+![Cesium Air WebSocket](./img/air.png)
+
 ## 获取
 
 ```shell
