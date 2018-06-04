@@ -1,16 +1,18 @@
 var WebSocket = require('ws')
 var axios = require('axios')
 var CircularJSON = require('circular-json')
+var config = require('./serverConfig')
 var wss = new WebSocket.Server({
   port: 8181
 })
 
 wss.on('connection', function (ws) {
   console.log('client connected')
+  console.log(config)
   ws.on('message', function (message) {
     ws.send(message)
   })
-  getDataByInterval(20 * 1000, wss)
+  getDataByInterval(config.requestInterval, wss)
 })
 
 /**
