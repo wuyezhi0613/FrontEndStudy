@@ -33,7 +33,9 @@
       "console",
       "Errow",
       "WebSocket",
-      "Cesium"
+      "Cesium",
+      "config",
+      "$"
     ],
     "properties": false,
     "parser": "babel-eslint",

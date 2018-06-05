@@ -8,10 +8,9 @@ var wss = new WebSocket.Server({
 
 wss.on('connection', function (ws) {
   console.log('client connected')
-  console.log(config)
-  ws.on('message', function (message) {
-    ws.send(message)
-  })
+  // ws.on('message', function (message) {
+  //   ws.send(message)
+  // })
   getDataByInterval(config.requestInterval, wss)
 })
 

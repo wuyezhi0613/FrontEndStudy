@@ -61,8 +61,45 @@ function getViewer () {
 
     viewer.scene.globe.enableLighting = false
     viewer._cesiumWidget._creditContainer.style.display = 'none'
+
+    viewer.entities.collectionChanged.addEventListener(onChanged);
     resolve(viewer)
   })
+}
+function onChanged (collection, added, removed, changed) {
+  var msg = 'Added ids'
+  for (var i = 0; i < added.length; i++) {
+    msg += '\n' + added[i].id
+  }
+  console.log(msg)
+}
+/**
+ *
+ *
+ * @param {Array[Array]} modalInfo
+ * @param {string} key 列表中的唯一值，用于模型id
+ * @param {number} id 该记录的序列号，自增
+ * @returns
+ */
+function addToList (modalInfo, key, id) {
+  let flightNumber = modalInfo[13] ? modalInfo[13] : '--'
+  let start = modalInfo[12] ? modalInfo[12] : '--'
+  let arrival = modalInfo[11] ? modalInfo[11] : '--'
+  let type = modalInfo[8] ? modalInfo[8] : '--'
+  let status = modalInfo[5] > 0 ? '飞行中' : '已降落'
+  return '<div class="content-item" id="' + key + '"><span class="item item-id">' + id + '</span>' +
+  '<span class="item item-flightNumber">' + flightNumber + '</span>' +
+  '<span class="item item-start">' + start + '</span>' +
+  '<span class="item item-arrival">' + arrival + '</span>' +
+  '<span class="item item-type">' + type + '</span>' +
+  '<span class="item  item-status">' + status + '</span></div>'
+}
+
+function trackedTarget (id) {
+  let entity = viewer.entities.getById(id)
+  console.log(entity)
+  viewer.trackedEntity = entity
+  viewer.flyTo(entity)
 }
 
 /**
@@ -71,15 +108,34 @@ function getViewer () {
  */
 function AddModals (modals) {
   viewer.entities.removeAll()
+  let listContent = document.getElementsByClassName('list-content')[0]
+  listContent.innerHTML = ''
+  let i = 0
+  let temp = ''
   for (let index in modals) {
-    AddModal(modals[index])
+    if (index === 'full_count' || index === 'version') {
+    } else {
+      i++
+      if (i > config.limit) {
+        break
+      }
+      AddModal(modals[index], index)
+      temp += addToList(modals[index], index, i)
+    }
   }
+  listContent.innerHTML = temp
+  $('.content-item').on('click', function (evt) {
+    if (this.id) {
+      trackedTarget(this.id)
+    }
+  })
 }
 /**
  * 添加单个模型
  * @param {Cesium.Ｖiewer} viewer 三维球视图
+ * @param {string|number} key unique value
  */
-function AddModal (modalInfo) {
+function AddModal (modalInfo, key) {
   // modal 位置
   if (modalInfo[0] & modalInfo[1] & modalInfo[2] & modalInfo[3] & modalInfo[4]) {
     let position = new Cesium.Cartesian3.fromDegrees(modalInfo[2], modalInfo[1], modalInfo[4])
@@ -88,20 +144,18 @@ function AddModal (modalInfo) {
     let roll = Cesium.Math.toRadians(0)
     let hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
     let orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr)
-    let entity = viewer.entities.add({
-      name: 'truck',
+    let entity = new Cesium.Entity({
+      id: key,
+      name: key,
       position: position,
       orientation: orientation,
       model: {
         uri: '../lib/Cesium-1.45/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf',
-        // uri: '../../modals/1505010850_14112.dae.gltf'
-        // heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-        // minimumPixelSize: 128,
-        // maximumScale: 20,
+        minimumPixelSize: 128,
+        maximumScale: 20000,
         scale: 80
       }
     })
-    viewer.trackedEntity = entity
-    // entity = null
+    viewer.entities.add(entity)
   }
 }
