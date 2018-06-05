@@ -11,19 +11,23 @@ git clone -b websocket https://github.com/guzhongren/FrontEndStudy.git
 ## 安装依赖
 
 ```shell
-npm install # yarn
+$ cd FrontEndStudy
+$ npm install
+# yarn
 ```
 
 ## 启动服务端
 
 ```shell
-npm run server # yarn run server
+$ npm run server
+# yarn run server
 ```
 
 ## 启动浏览器
 
 ```shell
-npm run browser
+$ npm run browser
+# yarn run browser
 ```
 
 ### Cesium地址
