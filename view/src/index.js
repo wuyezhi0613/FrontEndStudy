@@ -61,18 +61,10 @@ function getViewer () {
 
     viewer.scene.globe.enableLighting = false
     viewer._cesiumWidget._creditContainer.style.display = 'none'
-
-    viewer.entities.collectionChanged.addEventListener(onChanged);
     resolve(viewer)
   })
 }
-function onChanged (collection, added, removed, changed) {
-  var msg = 'Added ids'
-  for (var i = 0; i < added.length; i++) {
-    msg += '\n' + added[i].id
-  }
-  console.log(msg)
-}
+
 /**
  *
  *
@@ -97,7 +89,6 @@ function addToList (modalInfo, key, id) {
 
 function trackedTarget (id) {
   let entity = viewer.entities.getById(id)
-  console.log(entity)
   viewer.trackedEntity = entity
   viewer.flyTo(entity)
 }
@@ -137,9 +128,9 @@ function AddModals (modals) {
  */
 function AddModal (modalInfo, key) {
   // modal 位置
-  if (modalInfo[0] & modalInfo[1] & modalInfo[2] & modalInfo[3] & modalInfo[4]) {
-    let position = new Cesium.Cartesian3.fromDegrees(modalInfo[2], modalInfo[1], modalInfo[4])
-    let heading = Cesium.Math.toRadians(modalInfo[3] - 90)
+  if (modalInfo[1] & modalInfo[2]) {
+    let position = new Cesium.Cartesian3.fromDegrees(modalInfo[2], modalInfo[1], (modalInfo[4] ? modalInfo[4] : 0))
+    let heading = Cesium.Math.toRadians((modalInfo[3] ? modalInfo[3] : 0) - 90)
     let pitch = Cesium.Math.toRadians(2)
     let roll = Cesium.Math.toRadians(0)
     let hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
@@ -152,8 +143,8 @@ function AddModal (modalInfo, key) {
       model: {
         uri: '../lib/Cesium-1.45/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf',
         minimumPixelSize: 128,
-        maximumScale: 20000,
-        scale: 80
+        maximumScale: 20000
+        // scale: 80
       }
     })
     viewer.entities.add(entity)

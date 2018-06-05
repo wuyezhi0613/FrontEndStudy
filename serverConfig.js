@@ -2,6 +2,6 @@
  * * 定时刷新时间间隔
  */
 let config = {
-  'requestInterval': 200 * 1000
+  'requestInterval': 0.5 * 60 * 1000
 }
 module.exports = config

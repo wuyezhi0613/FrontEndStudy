@@ -25,11 +25,13 @@ body,
   margin-right: 20px;
 }
 .title-header{
-  padding: 5px 15px ;
-  text-align: center;
+  /* padding: 5px 15px ; */
+  display: inline-block;
+  text-align: left;
 }
 .title-id {
   width: 50px;
+  text-align: center;
 }
 .title-flightNumber{
   width: 75px;
