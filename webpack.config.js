@@ -2,7 +2,7 @@ const isProduction = process.argv.indexOf('production') > 0
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
@@ -18,7 +18,7 @@ module.exports = {
     contentBase: path.resolve(__dirname, './public'),
     compress: true,
     host: 'localhost',
-    port: 9000,
+    port: 8080,
     publicPath: '/dist/',
     hot: true,
     inline: true,
@@ -47,6 +47,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           { loader: 'style-loader' },
           {
@@ -59,9 +60,13 @@ module.exports = {
       },
       {
         test: /\.less$/i,
+        exclude: /node_modules/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
+            options: {
+              sourceMap: true
+            }
           },
           {
             loader: 'css-loader',
@@ -81,7 +86,7 @@ module.exports = {
         use: 'url-loader?limit=1500&name=images/[hash:6].[ext]'
       },
       {
-          test: /\.woff$/,
+          test: /\.woff(2)$/,
           use: 'url-loader?limit=10000&name=dist/fa/[hash].[ext]&mimetype=application/font-woff'
       },
       {
@@ -93,9 +98,9 @@ module.exports = {
   target: 'web',
   plugins: [
     // extractLess
-    // new CleanWebpackPlugin('./public/dist'),
+    new CleanWebpackPlugin('./build'),
     new HtmlWebpackPlugin({
-        // title: 'Summit Web',
+        title: 'Summit Web',
         chunks: ['app_bundle'],
         filename: '../index.html',
         template: './public/index.html'
