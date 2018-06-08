@@ -1,6 +1,6 @@
-import * as React from 'react';
-import './App.css';
-// import logo from './logo.svg';
+import * as React from 'react'
+import './App.css'
+// import logo from './logo.svg'
 
 class App extends React.Component {
   public render() {
@@ -14,8 +14,8 @@ class App extends React.Component {
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

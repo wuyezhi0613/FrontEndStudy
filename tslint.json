@@ -1,9 +1,10 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
-      "node_modules/**/*.ts"
+      "node_modules/**/*.ts",
+      "tsconfig.json"
     ]
   },
   "rules": {
@@ -12,6 +13,7 @@
         120
       ]
     },
+    "semicolon": [true, "never"],
     "new-parens": true,
     "no-arg": true,
     "no-bitwise": true,
