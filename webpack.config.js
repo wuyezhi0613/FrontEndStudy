@@ -1,6 +1,7 @@
 const isProduction = process.argv.indexOf('production') > 0
 const webpack = require('webpack')
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
@@ -9,7 +10,7 @@ module.exports = {
   },
   output: {
     filename: 'js/[name]_bundle.js',
-    path: path.resolve(__dirname, './public/dist/'),
+    path: path.resolve(__dirname, './build/dist/'),
     publicPath: '/dist/'
   },
   devtool: isProduction ? false : 'cheap-module-eval-source-map',
@@ -42,9 +43,6 @@ module.exports = {
         test: /\.js$/,
         use: [
           'babel-loader'
-        ],
-        exclude: [
-          // path.resolve(path.join(__dirname, 'node_modules/cesium'))
         ]
       },
       {
@@ -79,29 +77,29 @@ module.exports = {
           }]
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|gif|woff|ico|cur)$/,
+        test: /\.(png|jpg|jpeg|gif|svg|gif|ico|cur)$/,
         use: 'url-loader?limit=1500&name=images/[hash:6].[ext]'
+      },
+      {
+          test: /\.woff$/,
+          use: 'url-loader?limit=10000&name=dist/fa/[hash].[ext]&mimetype=application/font-woff'
+      },
+      {
+          test: /\.(ttf|eot)$/,
+          use: 'file-loader?name=dist/fa/[hash].[ext]'
       }
-      // {
-      //     test: /\.woff$/,
-      //     use: 'url-loader?limit=10000&name=dist/fa/[hash].[ext]&mimetype=application/font-woff'
-      // },
-      // {
-      //     test: /\.(ttf|eot|svg)$/,
-      //     use: 'file-loader?name=dist/fa/[hash].[ext]'
-      // }
     ]
   },
   target: 'web',
   plugins: [
     // extractLess
     // new CleanWebpackPlugin('./public/dist'),
-    // new HtmlWebpackPlugin({
-    //     title: 'Summit Web',
-    //     chunks: ['./dist/js/app_bundle'],
-    //     filename: './public/index.html',
-    //     template: './public/index.html'
-    // }),
+    new HtmlWebpackPlugin({
+        // title: 'Summit Web',
+        chunks: ['app_bundle'],
+        filename: '../index.html',
+        template: './public/index.html'
+    }),
   ].concat(!isProduction ? [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
