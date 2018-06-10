@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+
 module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
@@ -47,9 +48,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
+        // include: "/node_modules/antd/",
+        // exclude: "/node_modules/",
         use: [
-          { loader: 'style-loader' },
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
@@ -86,27 +88,31 @@ module.exports = {
         use: 'url-loader?limit=1500&name=images/[hash:6].[ext]'
       },
       {
-          test: /\.woff(2)$/,
-          use: 'url-loader?limit=10000&name=dist/fa/[hash].[ext]&mimetype=application/font-woff'
+        test: /\.woff(2)$/,
+        use: 'url-loader?limit=10000&name=dist/fa/[hash].[ext]&mimetype=application/font-woff'
       },
       {
-          test: /\.(ttf|eot)$/,
-          use: 'file-loader?name=dist/fa/[hash].[ext]'
+        test: /\.(ttf|eot)$/,
+        use: 'file-loader?name=dist/fa/[hash].[ext]'
       }
     ]
   },
   target: 'web',
   plugins: [
-    // extractLess
     new CleanWebpackPlugin('./build'),
-    new HtmlWebpackPlugin({
-        title: 'Summit Web',
-        chunks: ['app_bundle'],
-        filename: '../index.html',
-        template: './public/index.html'
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./public/dist/vendor-manifest.json')
     }),
   ].concat(!isProduction ? [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
-  ] : [])
+  ] : [
+      new HtmlWebpackPlugin({
+        title: 'Summit Web',
+        chunks: ['app_bundle'],
+        filename: '../index.html',
+        template: './public/index.html'
+      })
+    ])
 }

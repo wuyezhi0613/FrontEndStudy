@@ -19,6 +19,14 @@
     "no-bitwise": true,
     "no-conditional-assignment": true,
     "no-consecutive-blank-lines": false,
-    "no-console": false
+    "no-console": false,
+    "ordered-imports": [true, {
+      "import-sources-order": "any",
+      "named-imports-order": "case-insensitive"
+    }],
+    "no-submodule-imports": [
+      true,
+      "antd/dist/antd.css"
+    ]
   }
 }
