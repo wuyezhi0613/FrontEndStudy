@@ -1,6 +1,7 @@
 const isProduction = process.argv.indexOf('production') > 0
 const path = require('path')
 const webpack = require('webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const targetContent = isProduction ? 'build' : 'public'
 
@@ -39,6 +40,7 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin('./build'),
     new webpack.DllPlugin({
       path: path.join(__dirname, targetContent, 'dist', '[name]-manifest.json'),
       name: '[name]_[hash]'

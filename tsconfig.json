@@ -34,6 +34,7 @@
     "src/setupTests.ts",
     "webpack.config.js",
     "webpack.vendor.js",
+    "postcss.config.js",
     "public/dist"
   ]
 }

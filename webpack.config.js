@@ -3,7 +3,9 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const isSourceMap = isProduction ? false : true
 module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
@@ -13,6 +15,39 @@ module.exports = {
     filename: 'js/[name]_bundle.js',
     path: path.resolve(__dirname, './build/dist/'),
     publicPath: '/dist/'
+  },
+  optimization: {
+    // 包清单
+    runtimeChunk: {
+      name: 'manifest'
+    },
+    // 拆分公共包
+    splitChunks: {
+      cacheGroups: {
+        // styles: {
+        //   name: 'styles',
+        //   test: /\.(c|sc)ss$/,
+        //   chunks: 'initial',
+        //   enforce: true
+        // },
+        // 项目公共组件
+        common: {
+          chunks: 'initial',
+          name: 'common',
+          minChunks: 2,
+          maxInitialRequests: 5,
+          minSize: 0
+        },
+        // 第三方组件
+        vendor: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'vendor',
+          priority: 10,
+          enforce: true
+        }
+      }
+    }
   },
   devtool: isProduction ? false : 'cheap-module-eval-source-map',
   devServer: {
@@ -47,39 +82,39 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/,
-        // include: "/node_modules/antd/",
-        // exclude: "/node_modules/",
+        test: /\.(sa|sc|c)ss$/,
+        // exclude: /node_modules/,
+        // include: path.join(__dirname, '/node_modules/antd'),
         use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.less$/i,
-        exclude: /node_modules/,
-        use: [
-          {
+          isProduction ? MiniCssExtractPlugin.loader : {
             loader: 'style-loader',
             options: {
-              sourceMap: true
+              sourceMap: isSourceMap
             }
           },
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true
+              sourceMap: isSourceMap
             }
           },
           {
-            loader: 'less-loader',
+            loader: 'postcss-loader',
             options: {
-              sourceMap: true
+              sourceMap: isSourceMap,
+              ident: 'postcss',
+              plugins: (loader) => [
+                require('postcss-import')({ root: loader.resourcePath }),
+                require('postcss-cssnext')(),
+                require('autoprefixer')(),
+                require('cssnano')()
+              ]
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: isSourceMap
             }
           }]
       },
@@ -99,20 +134,24 @@ module.exports = {
   },
   target: 'web',
   plugins: [
-    new CleanWebpackPlugin('./build'),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./public/dist/vendor-manifest.json')
-    }),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].style.css'
+      // chunkFilename: '[id].css'
+    })
   ].concat(!isProduction ? [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
   ] : [
-      new HtmlWebpackPlugin({
-        title: 'Summit Web',
-        chunks: ['app_bundle'],
-        filename: '../index.html',
-        template: './public/index.html'
-      })
-    ])
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].style.css',
+      chunkFilename: '[id].css'
+    }),
+    new CleanWebpackPlugin('./build'),
+    new HtmlWebpackPlugin({
+      title: 'Summit Web',
+      chunks: ['app_bundle'],
+      filename: '../index.html',
+      template: './public/index.html'
+    })
+  ])
 }
