@@ -5,14 +5,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const isSourceMap = isProduction ? false : true
 module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
     app: './src/index.tsx'
+    // vendor: ['react', 'react-dom', 'antd']
   },
+  // entry: './src/index.tsx',
   output: {
     filename: 'js/[name]_bundle.js',
+    chunkFilename: 'js/[name]_bundle.js',
     path: path.resolve(__dirname, './build/dist/'),
     publicPath: '/dist/'
   },
@@ -23,20 +25,23 @@ module.exports = {
     },
     // 拆分公共包
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
-        // styles: {
-        //   name: 'styles',
-        //   test: /\.(c|sc)ss$/,
-        //   chunks: 'initial',
-        //   enforce: true
-        // },
+        styles: {
+          name: 'app',
+          test: /\.(sa|sc|c)ss$/,
+          minChunks: 1,
+          reuseExistingChunk: true,
+          enforce: true
+        },
         // 项目公共组件
         common: {
           chunks: 'initial',
           name: 'common',
           minChunks: 2,
           maxInitialRequests: 5,
-          minSize: 0
+          minSize: 0,
+          enforce: true
         },
         // 第三方组件
         vendor: {
@@ -81,40 +86,52 @@ module.exports = {
           'babel-loader'
         ]
       },
+      // {
+      //   test: /\.css$/,
+      //   use: [
+      //     MiniCssExtractPlugin.loader,
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         url: false,
+      //         sourceMap: !isProduction
+      //       }
+      //     }
+      //   ]
+      // },
       {
         test: /\.(sa|sc|c)ss$/,
         // exclude: /node_modules/,
         // include: path.join(__dirname, '/node_modules/antd'),
         use: [
-          isProduction ? MiniCssExtractPlugin.loader : {
-            loader: 'style-loader',
-            options: {
-              sourceMap: isSourceMap
-            }
-          },
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
-              sourceMap: isSourceMap
+              url: false,
+              sourceMap: !isProduction
             }
           },
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: isSourceMap,
+              sourceMap: !isProduction,
               ident: 'postcss',
               plugins: (loader) => [
-                require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-cssnext')(),
-                require('autoprefixer')(),
-                require('cssnano')()
+                require('postcss-import')(),
+                require('postcss-cssnext')({
+                  features: {
+                    customProperties: { warnings: false }
+                  }
+                }),
+                require('postcss-font-magician')()
               ]
             }
           },
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: isSourceMap
+              sourceMap: !isProduction
             }
           }]
       },
@@ -135,23 +152,24 @@ module.exports = {
   target: 'web',
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].style.css'
-      // chunkFilename: '[id].css'
+      filename: 'style/[name].css',
+      chunkFilename: 'style/[name].css'
     })
   ].concat(!isProduction ? [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ] : [
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].style.css',
-      chunkFilename: '[id].css'
-    }),
     new CleanWebpackPlugin('./build'),
     new HtmlWebpackPlugin({
       title: 'Summit Web',
-      chunks: ['app_bundle'],
+      hash: true,
+      // chunks: ['manifest', 'common', 'vendor', 'app'],
       filename: '../index.html',
-      template: './public/index.html'
+      minify: {
+        // collapseWhitespace: true,
+        // removeAttributeQuotes: true
+      },
+      cache: true
     })
   ])
 }
