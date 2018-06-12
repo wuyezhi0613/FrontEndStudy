@@ -165,6 +165,7 @@ module.exports = {
       hash: true,
       // chunks: ['manifest', 'common', 'vendor', 'app'],
       filename: '../index.html',
+      template: './public/template.html',
       minify: {
         // collapseWhitespace: true,
         // removeAttributeQuotes: true
