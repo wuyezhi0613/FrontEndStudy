@@ -4,6 +4,8 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
@@ -18,7 +20,51 @@ module.exports = {
     path: path.resolve(__dirname, './build/dist/'),
     publicPath: '/dist/'
   },
+  // optimization: {
+  //   // 包清单
+  //   runtimeChunk: {
+  //     name: 'manifest'
+  //   },
+  //   // 拆分公共包
+  //   splitChunks: {
+  //     chunks: 'all',
+  //     cacheGroups: {
+  //       styles: {
+  //         name: 'app',
+  //         test: /\.(sa|sc|c)ss$/,
+  //         minChunks: 1,
+  //         reuseExistingChunk: true,
+  //         enforce: true
+  //       },
+  //       // 项目公共组件
+  //       common: {
+  //         chunks: 'initial',
+  //         name: 'common',
+  //         minChunks: 2,
+  //         maxInitialRequests: 5,
+  //         minSize: 0,
+  //         enforce: true
+  //       },
+  //       // 第三方组件
+  //       vendor: {
+  //         test: /node_modules/,
+  //         chunks: 'initial',
+  //         name: 'vendor',
+  //         priority: 10,
+  //         enforce: true
+  //       }
+  //     }
+  //   }
+  // },
   optimization: {
+    minimizer: [
+      // new UglifyJsPlugin({
+      //   cache: true,
+      //   parallel: true,
+      //   sourceMap: true // set to true if you want JS source maps
+      // }),
+      new OptimizeCSSAssetsPlugin({})
+    ],
     // 包清单
     runtimeChunk: {
       name: 'manifest'
@@ -117,14 +163,17 @@ module.exports = {
             options: {
               sourceMap: !isProduction,
               ident: 'postcss',
-              plugins: (loader) => [
-                require('postcss-import')(),
-                require('postcss-cssnext')({
-                  features: {
-                    customProperties: { warnings: false }
-                  }
-                }),
-                require('postcss-font-magician')()
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                require('autoprefixer')({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9' // React doesn't support IE8 anyway
+                  ],
+                  flexbox: 'no-2009'
+                })
               ]
             }
           },
@@ -137,7 +186,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|gif|ico|cur)$/,
-        use: 'url-loader?limit=1500&name=images/[hash:6].[ext]'
+        use: 'url-loader?limit=8192&name=images/[hash:6].[ext]'
       },
       {
         test: /\.woff(2)$/,
@@ -145,7 +194,7 @@ module.exports = {
       },
       {
         test: /\.(ttf|eot)$/,
-        use: 'file-loader?name=dist/fa/[hash].[ext]'
+        use: 'url-loader?name=dist/fa/[hash].[ext]'
       }
     ]
   },
@@ -154,12 +203,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'style/[name].css',
       chunkFilename: 'style/[name].css'
-    })
-  ].concat(!isProduction ? [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ] : [
-    new CleanWebpackPlugin('./build'),
+    }),
     new HtmlWebpackPlugin({
       title: 'Summit Web',
       hash: true,
@@ -172,5 +216,10 @@ module.exports = {
       },
       cache: true
     })
+  ].concat(!isProduction ? [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ] : [
+    new CleanWebpackPlugin('./build')
   ])
 }

@@ -27,6 +27,8 @@
     "no-submodule-imports": [
       true,
       "antd/dist/antd.css"
-    ]
+    ],
+    "member-access": false,
+    "member-ordering": false
   }
 }
