@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
@@ -186,7 +186,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|gif|ico|cur)$/,
-        use: 'url-loader?limit=8192&name=images/[hash:6].[ext]'
+        use: 'url-loader?limit=1500&name=images/[hash:6].[ext]'
       },
       {
         test: /\.woff(2)$/,

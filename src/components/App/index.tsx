@@ -52,7 +52,7 @@ class App extends React.Component<IProps, IState> {
         </p>
         <Button onClick={this.say}> antd test</Button>
         <Summit onSay={this.receiveFromSummit}/>
-        <Web onSendMessage={}/>>
+        <Web />
       </div>
     )
   }

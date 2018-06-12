@@ -15,7 +15,7 @@ interface IState {
 }
 
 interface IProps {
-  onSendMessage:(message: string) => void
+  onSendMessage?:(message: string) => void
 }
 
 export default class Web extends React.Component<IProps, IState> {
@@ -35,14 +35,18 @@ export default class Web extends React.Component<IProps, IState> {
     }
   }
   private sendMessage (message: any) {
-    this.props.onSendMessage(this.state.content)
+    if (this.state.content) {
+      if (this.props.onSendMessage) {
+        this.props.onSendMessage(this.state.content)
+      }
+    }
   }
 
   render() {
     return (
       <div>
         {
-          this.state.messageList.map(item => {
+          this.state.messageList && this.state.messageList.length >0 &&this.state.messageList.map(item => {
             if ( item.type === Type.SEND) {
               return <div>{item.message}</div>
             }else {
