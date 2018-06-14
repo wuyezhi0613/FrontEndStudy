@@ -116,16 +116,42 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|gif|ico|cur)$/,
-        use: 'url-loader?limit=1500&name=images/[hash:6].[ext]'
+        // use: 'url-loader?limit=1500&name=images/[hash:6].[ext]',
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 1500,
+            name: 'images/[hash:6].[ext]',
+            publicPath: 'dist'
+          }
+        }]
       },
       {
         test: /\.woff(2)$/,
-        use: 'url-loader?limit=10000&name=dist/fa/[hash].[ext]&mimetype=application/font-woff'
+        use: 'url-loader?limit=10000&name=fonts/[hash].[ext]&mimetype=application/font-woff'
       },
       {
-        test: /\.(ttf|eot)$/,
-        use: 'url-loader?name=dist/fa/[hash].[ext]'
+        test: /\.(ttf|eot|otf)(\?[\s\S]+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[hash:6].[ext]',
+            outputPath: 'fonts/',
+            publicPath: '../'
+          }
+        }]
       }
+      // {
+      //   test: /.(ttf|otf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
+      //   use: [{
+      //     loader: 'file-loader',
+      //     options: {
+      //       name: '[name].[ext]',
+      //       outputPath: 'fonts/',
+      //       publicPath: '../'
+      //     }
+      //   }]
+      // }
     ]
   },
   target: 'web',
