@@ -62,8 +62,10 @@
   },
   "browserslist": {
     "production": [
-      "> 5%",
-      "ie 10"
+      ">5%",
+      "last 4 versions",
+      "Firefox ESR",
+      "not ie < 9"
     ],
     "development": [
       "last 1 chrome version",

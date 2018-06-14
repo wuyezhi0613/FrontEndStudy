@@ -81,30 +81,22 @@ module.exports = {
         // include: path.join(__dirname, '/node_modules/antd'),
         use: [
           MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              url: false,
-              sourceMap: !isProduction
-            }
-          },
+          // {
+          //   loader: 'css-loader',
+          //   options: {
+          //     url: false,
+          //     sourceMap: !isProduction
+          //   }
+          // },
+          'css-loader?importLoaders=1&localIdentName=[local]_[hash:base64:6]',
           {
             loader: 'postcss-loader',
             options: {
               sourceMap: !isProduction,
-              ident: 'postcss',
-              plugins: () => [
-                require('postcss-flexbugs-fixes'),
-                require('autoprefixer')({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9' // React doesn't support IE8 anyway
-                  ],
-                  flexbox: 'no-2009'
-                })
-              ]
+              ident: 'postcss'
+              // plugins: () => [require('autoprefixer')({
+              //   'browsers': ['> 1%', 'last 2 versions']
+              // })]
             }
           },
           {
