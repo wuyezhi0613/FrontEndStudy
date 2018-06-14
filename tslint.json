@@ -8,11 +8,11 @@
     ]
   },
   "rules": {
-    "max-line-length": {
-      "options": [
-        120
-      ]
-    },
+    // "max-line-length": {
+    //   "options": [
+    //     120
+    //   ]
+    // },
     "semicolon": [true, "never"],
     "new-parens": true,
     "no-arg": true,
@@ -26,9 +26,11 @@
     }],
     "no-submodule-imports": [
       true,
-      "antd/dist/antd.css"
+      "antd/dist/antd.css",
+      "maptalks/dist/maptalks.css"
     ],
     "member-access": false,
-    "member-ordering": false
+    "member-ordering": false,
+    "object-literal-sort-keys": false
   }
 }

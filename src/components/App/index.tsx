@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Button } from 'antd'
 import './App.scss'
 // import logo from './logo.svg'
-
+import MaptalksCom from '../mapComponents/MaptalksCom'
 import Summit from '../Summit'
 import Web from '../Web'
 
@@ -54,6 +54,7 @@ class App extends React.Component<IProps, IState> {
         <Summit message={this.state.SummitMessage} onSay={this.receiveFromSummit}/>
         <h3>分割线哈</h3>
         <Web message = {this.state.WebMessage} onSendMessage={this.receiveFromWeb}/>
+        <MaptalksCom mapStyle={{height: '500px'}} />
       </div>
     )
   }

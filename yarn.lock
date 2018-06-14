@@ -4281,6 +4281,13 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+maptalks@^0.40.3:
+  version "0.40.3"
+  resolved "https://registry.yarnpkg.com/maptalks/-/maptalks-0.40.3.tgz#0a9bf402344eb4dbdb4b3e4be4f069ffcf7a4a30"
+  dependencies:
+    simplify-js "^1.2.1"
+    zousan "^2.3.3"
+
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
@@ -6556,6 +6563,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
+simplify-js@^1.2.1:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/simplify-js/-/simplify-js-1.2.3.tgz#a3422c1b9884d60421345eb44d2b872662df27f5"
+
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -7644,3 +7655,7 @@ yargs@^7.0.0:
     which-module "^1.0.0"
     y18n "^3.2.1"
     yargs-parser "^5.0.0"
+
+zousan@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/zousan/-/zousan-2.3.3.tgz#85432ff253a5fcb6a192416cdebc4e3dc9cb9813"

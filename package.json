@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.6.1",
+    "maptalks": "^0.40.3",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },
