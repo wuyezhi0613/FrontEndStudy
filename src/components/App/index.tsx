@@ -7,8 +7,8 @@ import Summit from '../Summit'
 import Web from '../Web'
 
 interface IState {
-  SummitContent?: string
-  WebContent?: string
+  SummitMessage?: string
+  WebMessage?: string
 }
 export interface IProps {
   empty?: any
@@ -19,8 +19,8 @@ class App extends React.Component<IProps, IState> {
   constructor(props: IProps, state: IState) {
     super(props)
     this.state = {
-      SummitContent: '',
-      WebContent:''
+      SummitMessage: '',
+      WebMessage:''
     }
     this.receiveFromSummit = this.receiveFromSummit.bind(this)
     this.receiveFromWeb = this.receiveFromWeb.bind(this)
@@ -30,14 +30,14 @@ class App extends React.Component<IProps, IState> {
   }
   public receiveFromSummit(content: any) {
     this.setState({
-      WebContent: content
+      WebMessage: content
     }, ()=> {
-      console.log(`父容器收到信息，内容为：${this.state.WebContent}`)
+      console.log(`父容器收到信息，内容为：${this.state.WebMessage}`)
     })
   }
   receiveFromWeb(content: any) {
     this.setState({
-      SummitContent: content
+      SummitMessage: content
     })
   }
   public render() {
@@ -51,9 +51,9 @@ class App extends React.Component<IProps, IState> {
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
         <Button onClick={this.say}> antd test</Button>
-        <Summit onSay={this.receiveFromSummit}/>
+        <Summit message={this.state.SummitMessage} onSay={this.receiveFromSummit}/>
         <h3>分割线哈</h3>
-        <Web />
+        <Web message = {this.state.WebMessage} onSendMessage={this.receiveFromWeb}/>
       </div>
     )
   }

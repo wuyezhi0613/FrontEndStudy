@@ -4,6 +4,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCss = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
@@ -17,7 +18,8 @@ module.exports = {
     publicPath: '/dist/'
   },
   optimization: {
-    minimize: isProduction, // 是否进行代码压缩
+    // minimize: isProduction, // 是否进行代码压缩
+    minimizer: [new OptimizeCss({})],
     splitChunks: {
       chunks: 'all',
       minSize: 30000, // 模块大于30k会被抽离到公共模块
@@ -73,19 +75,6 @@ module.exports = {
           'babel-loader'
         ]
       },
-      // {
-      //   test: /\.css$/,
-      //   use: [
-      //     MiniCssExtractPlugin.loader,
-      //     {
-      //       loader: 'css-loader',
-      //       options: {
-      //         url: false,
-      //         sourceMap: !isProduction
-      //       }
-      //     }
-      //   ]
-      // },
       {
         test: /\.(sa|sc|c)ss$/,
         // exclude: /node_modules/,
@@ -141,6 +130,12 @@ module.exports = {
   },
   target: 'web',
   plugins: [
+    new OptimizeCss({
+      assetNameRegExp: /\.style\.css$/g,
+      cssProcessor: require('cssnano'),
+      cssProcessorOptions: { discardComments: { removeAll: true } },
+      canPrint: true
+    }),
     new MiniCssExtractPlugin({
       filename: 'style/[name].css'
     })
