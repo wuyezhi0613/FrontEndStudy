@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button } from 'antd'
 import './App.scss'
-import logo from './logo.svg'
+// import logo from './logo.svg'
 
 import Summit from '../Summit'
 import Web from '../Web'
@@ -44,7 +44,7 @@ class App extends React.Component<IProps, IState> {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={require('./logo.svg')} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcomes to React</h1>
         </header>
         <p className="App-intro">
@@ -52,6 +52,7 @@ class App extends React.Component<IProps, IState> {
         </p>
         <Button onClick={this.say}> antd test</Button>
         <Summit onSay={this.receiveFromSummit}/>
+        <h3>分割线哈</h3>
         <Web />
       </div>
     )

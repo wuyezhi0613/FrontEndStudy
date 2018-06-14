@@ -24,6 +24,8 @@ export default class Web extends React.Component<IProps, IState> {
     this.state = {
       messageList: []
     }
+    this.getValue = this.getValue.bind(this)
+    this.sendMessage = this.sendMessage.bind(this)
   }
   getValue(evt:any) {
     if (evt.target.value) {

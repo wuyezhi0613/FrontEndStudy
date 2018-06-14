@@ -10,7 +10,7 @@ export interface IProps {
 }
 
 export default class Summit extends React.Component<IProps, IState> {
-  constructor(state: IState, props: IProps) {
+  constructor(props: IProps, state: IState) {
     super(props)
     this.state = {
       content: ''
@@ -28,7 +28,7 @@ export default class Summit extends React.Component<IProps, IState> {
       })
     }
   }
-  private sendMessage (message: any) {
+  private sendMessage () {
     this.props.onSay(this.state.content)
   }
   public render() {
