@@ -6,7 +6,7 @@ interface  IState {
 }
 
 export interface IProps {
-  onSay: (content?:string) => void
+  onSay?: (content?:string) => void
 }
 
 export default class Summit extends React.Component<IProps, IState> {
@@ -29,7 +29,9 @@ export default class Summit extends React.Component<IProps, IState> {
     }
   }
   private sendMessage () {
-    this.props.onSay(this.state.content)
+    if(this.props.onSay) {
+      this.props.onSay(this.state.content)
+    }
   }
   public render() {
     return (
