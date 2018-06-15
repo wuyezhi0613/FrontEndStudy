@@ -49,7 +49,7 @@ class App extends React.Component<IProps, IState> {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={require('./logo.svg')} className="App-logo" alt="logo" />
+          <img src={require('./image/logo.svg')} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcomes to React</h1>
         </header>
         <p className="App-intro">

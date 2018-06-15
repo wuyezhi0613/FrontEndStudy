@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import IllegalElectromechanicalWell from './container/IllegalElectromechanicalWell'
-
+import App from './components/App'
 const Index = () => (
   <Router basename="/">
     {/* <div style={{ height: "100%" }}> */}
     {/* 预留菜单栏 */}
     <Switch>
       <Route exact path="/" component={IllegalElectromechanicalWellComp} />
-      {/* <Route path="/cesium" component={Cesium} /> */}
+      <Route path="/app" component={App} />
       <Route component={NoMatch} />
     </Switch>
     {/* </div> */}

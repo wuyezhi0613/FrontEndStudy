@@ -122,7 +122,7 @@ module.exports = {
           options: {
             name: '[hash:6].[ext]',
             outputPath: 'fonts/',
-            publicPath: '../'
+            publicPath: 'dist'
           }
         }]
       }
