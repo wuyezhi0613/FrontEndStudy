@@ -60,18 +60,12 @@
     "webpack-cli": "^3.0.3",
     "webpack-dev-server": "^3.1.4"
   },
-  "browserslist": {
-    "production": [
-      ">5%",
-      "last 4 versions",
-      "Firefox ESR",
-      "not ie < 9"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version"
-    ]
-  },
+  "browserslist": [
+    ">5%",
+    "last 4 versions",
+    "Firefox ESR",
+    "not ie < 9"
+  ],
   "standard": {
     "globals": [
       "console",

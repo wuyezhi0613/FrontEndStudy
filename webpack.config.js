@@ -18,7 +18,6 @@ module.exports = {
     publicPath: '/dist/'
   },
   optimization: {
-    // minimize: isProduction, // 是否进行代码压缩
     minimizer: [new OptimizeCss({})],
     splitChunks: {
       chunks: 'all',
@@ -81,13 +80,6 @@ module.exports = {
         // include: path.join(__dirname, '/node_modules/antd'),
         use: [
           MiniCssExtractPlugin.loader,
-          // {
-          //   loader: 'css-loader',
-          //   options: {
-          //     url: false,
-          //     sourceMap: !isProduction
-          //   }
-          // },
           'css-loader?importLoaders=1&localIdentName=[local]_[hash:base64:6]',
           {
             loader: 'postcss-loader',
@@ -133,17 +125,6 @@ module.exports = {
           }
         }]
       }
-      // {
-      //   test: /.(ttf|otf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
-      //   use: [{
-      //     loader: 'file-loader',
-      //     options: {
-      //       name: '[name].[ext]',
-      //       outputPath: 'fonts/',
-      //       publicPath: '../'
-      //     }
-      //   }]
-      // }
     ]
   },
   target: 'web',
