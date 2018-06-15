@@ -27,6 +27,25 @@
       "maptalks/dist/maptalks.css",
       "@fortawesome/fontawesome-free-solid"
     ],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ],
     "member-access": false,
     "member-ordering": false,
     "object-literal-sort-keys": false,

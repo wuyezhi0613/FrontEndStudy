@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export default class MaptalksCom extends React.Component<IProps, IState> {
-  map:any
+  map: any
   mapContainer: HTMLDivElement| null
 
   constructor(props: IProps, state: IState) {
@@ -42,12 +42,12 @@ export default class MaptalksCom extends React.Component<IProps, IState> {
 
   }
   componentDidMount() {
-    this.constructMap(this.mapContainer).then(map=>{
+    this.constructMap(this.mapContainer).then(map => {
       this.map = map
     }, (errInfo) => {
       console.error(errInfo)
     })
-    .then(()=>{
+    .then(() => {
       if (this.props.onCreate) {
         this.props.onCreate(this.map)
       }
@@ -69,9 +69,9 @@ export default class MaptalksCom extends React.Component<IProps, IState> {
    * @returns Promise
    * @memberof MaptalksCom
    */
-  constructMap(mapContainer:HTMLDivElement| null) {
+  constructMap(mapContainer: HTMLDivElement| null) {
     return new Promise((resolve, reject) => {
-      if(mapContainer) {
+      if (mapContainer) {
         if (this.props.isArcGISLayer) {
           const arcUrl = 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
           maptalks.SpatialReference.loadArcgis(arcUrl + '?f=pjson', (err, conf) => {
@@ -83,12 +83,12 @@ export default class MaptalksCom extends React.Component<IProps, IState> {
               zoom: config.mapOptions.zoom,
               maxZoom: 20,
               minZoom: 4,
-              spatialReference:{
-                projection:'EPSG:4326'
+              spatialReference: {
+                projection: 'EPSG:4326'
               },
               baseLayer: new maptalks.TileLayer('base', {
-                spatialReference:{
-                  projection:'EPSG:3857'
+                spatialReference: {
+                  projection: 'EPSG:3857'
                 },
                 'urlTemplate': arcUrl + '/tile/{z}/{y}/{x}',
                 'attribution': '&copy; <a target="_blank" href="' + arcUrl + '"">ArcGIS</a>'
@@ -98,7 +98,7 @@ export default class MaptalksCom extends React.Component<IProps, IState> {
         } else {
           resolve(new maptalks.Map(this.mapContainer, this.state.mapOptions))
         }
-      }else {
+      } else {
         reject("Invalid map container div")
       }
     })

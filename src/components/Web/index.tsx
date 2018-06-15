@@ -49,7 +49,7 @@ export default class Web extends React.Component<IProps, IState> {
     if (nextProps.message !== this.props.message) {
       this.setState({
         receivedMessage: nextProps.message
-      }, ()=> {
+      }, () => {
         console.log('Web组件接受到信息：', nextProps.message)
       })
     }

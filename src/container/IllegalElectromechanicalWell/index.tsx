@@ -47,8 +47,8 @@ export default class IllegalElectromechanicalWell extends React.Component<IProps
    * @memberof IllegalElectromechanicalWell
    */
   handleLoadedFile(dataList) {
-    if(this.state.hasData) {
-      this.uiMarkerList.map(item=> {
+    if (this.state.hasData) {
+      this.uiMarkerList.map(item => {
         item.remove()
       })
       this.uiMarkerList.splice(0, this.uiMarkerList.length)
@@ -56,7 +56,7 @@ export default class IllegalElectromechanicalWell extends React.Component<IProps
     if (dataList && dataList.length > 0) {
       this.setState({
         hasData: true
-      },()=>{
+      }, () => {
         this.addIllegalElectromechanicalWellToMap(dataList)
       })      
     }

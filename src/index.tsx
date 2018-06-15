@@ -11,6 +11,6 @@ ReactDOM.render(
 )
 
 declare var module:any
-if(module.hot){
+if(module.hot) {
   module.hot.accept()
 }

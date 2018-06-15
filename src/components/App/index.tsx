@@ -25,7 +25,7 @@ class App extends React.Component<IProps, IState> {
     super(props)
     this.state = {
       SummitMessage: '',
-      WebMessage:''
+      WebMessage: ''
     }
     this.receiveFromSummit = this.receiveFromSummit.bind(this)
     this.receiveFromWeb = this.receiveFromWeb.bind(this)
@@ -36,7 +36,7 @@ class App extends React.Component<IProps, IState> {
   public receiveFromSummit(content: any) {
     this.setState({
       WebMessage: content
-    }, ()=> {
+    }, () => {
       console.log(`父容器收到信息，内容为：${this.state.WebMessage}`)
     })
   }
