@@ -79,6 +79,7 @@ module.exports = {
         // exclude: /node_modules/,
         // include: path.join(__dirname, '/node_modules/antd'),
         use: [
+          'css-hot-loader',
           MiniCssExtractPlugin.loader,
           'css-loader?importLoaders=1&localIdentName=[local]_[hash:base64:6]',
           {

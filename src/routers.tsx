@@ -1,15 +1,13 @@
 import * as React from 'react'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import MaptalksCom from './components/mapComponents/MaptalksCom'
-
-import * as Config from './config'
+import IllegalElectromechanicalWell from './container/IllegalElectromechanicalWell'
 
 const Index = () => (
   <Router basename="/">
     {/* <div style={{ height: "100%" }}> */}
     {/* 预留菜单栏 */}
     <Switch>
-      <Route exact path="/" component={Maptalks} />
+      <Route exact path="/" component={IllegalElectromechanicalWellComp} />
       {/* <Route path="/cesium" component={Cesium} /> */}
       <Route component={NoMatch} />
     </Switch>
@@ -17,14 +15,10 @@ const Index = () => (
   </Router>
 )
 
-function getMap(map) {
-  console.log(map)
-  Config.default.maptalksMap = map
-}
 
-const Maptalks = ({ match }) => {
+const IllegalElectromechanicalWellComp = ({ match }) => {
   return (
-    <MaptalksCom isArcGISLayer mapStyle={{ height: "100%", width: '100%' }} onCreate={getMap} />
+    <IllegalElectromechanicalWell />
   )
 }
 const NoMatch = ({ match }) => {
