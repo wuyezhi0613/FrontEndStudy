@@ -27,11 +27,11 @@ export default class IllegalElectromechanicalWell extends React.Component<IProps
   addIllegalElectromechanicalWellToMap(dataList: string[][]) {
     const self = this
     dataList.map(item => {
-      const longitude = parseFloat(item[9])
-      const latitude = parseFloat(item[10])
+      const longitude = parseFloat(item[7])
+      const latitude = parseFloat(item[8])
       if (longitude && latitude) {
         const dom = document.createElement('div')
-        dom.innerHTML = `<img  src=${require('./image/jidianjin.gif')}/>`
+        dom.innerHTML = `<img  src=${require('./image/jidianjin.gif')}>`
         const tempMarker = new maptalks.ui.UIMarker([longitude, latitude], {
           draggable: false,
           content: dom
