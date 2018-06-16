@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCss = require('optimize-css-assets-webpack-plugin')
-// const Config = require('./src/config.ts')
+
 module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
@@ -14,8 +14,8 @@ module.exports = {
   output: {
     filename: 'js/[name]_bundle.js',
     chunkFilename: 'js/[name]_bundle.js',
-    path: path.resolve(__dirname, `./build/dist/`),
-    publicPath: './dist/'
+    path: path.resolve(__dirname, './build/dist/'),
+    publicPath: '/dist/'
   },
   optimization: {
     minimizer: [new OptimizeCss({})],
@@ -106,27 +106,14 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 1500,
-            // outputPath: '',
             name: 'images/[hash:6].[ext]',
-            publicPath: '/dist'
+            publicPath: 'dist'
           }
         }]
       },
       {
         test: /\.woff(2)$/,
-        // use: 'url-loader?limit=10000&name=fonts/[hash].[ext]&mimetype=application/font-woff',
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 10000,
-              name: 'fonts/[hash].[ext]',
-              // outputPath: 'fonts/',
-              publicPath: '/dist',
-              mimetype: 'application/font-woff'
-            }
-          }
-        ]
+        use: 'url-loader?limit=10000&name=fonts/[hash].[ext]&mimetype=application/font-woff'
       },
       {
         test: /\.(ttf|eot|otf)(\?[\s\S]+)?$/,
@@ -135,7 +122,7 @@ module.exports = {
           options: {
             name: '[hash:6].[ext]',
             outputPath: 'fonts/',
-            publicPath: '/dist'
+            publicPath: 'dist'
           }
         }]
       }
@@ -155,26 +142,26 @@ module.exports = {
   ].concat(!isProduction ? [
     new webpack.HotModuleReplacementPlugin()
   ] : [
-      new CleanWebpackPlugin('./build'),
-      new HtmlWebpackPlugin({
-        title: 'Summit Web',
-        hash: true,
-        filename: '../index.html',
-        template: './public/template.html',
-        minify: {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          keepClosingSlash: true,
-          minifyJS: true,
-          minifyCSS: true,
-          minifyURLs: true
-        },
-        chunksSortMode: 'none',
-        cache: true
-      })
-    ])
+    new CleanWebpackPlugin('./build'),
+    new HtmlWebpackPlugin({
+      title: 'Summit Web',
+      hash: true,
+      filename: '../index.html',
+      template: './public/template.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      },
+      chunksSortMode: 'none',
+      cache: true
+    })
+  ])
 }
