@@ -10,7 +10,7 @@ ReactDOM.render(
   document.getElementById('root') as HTMLElement
 )
 
-declare var module:any
-if(module.hot) {
+declare var module: any
+if (module.hot) {
   module.hot.accept()
 }

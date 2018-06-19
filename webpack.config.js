@@ -5,6 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCss = require('optimize-css-assets-webpack-plugin')
+const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const HappyPack = require('happypack')
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
@@ -30,11 +32,13 @@ module.exports = {
         default: {
           minChunks: 2,
           priority: -20,
-          reuseExistingChunk: true
+          reuseExistingChunk: true,
+          name: 'default'
         },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10
+          priority: -10,
+          name: 'vendors'
         }
       }
     },
@@ -42,7 +46,7 @@ module.exports = {
       name: 'runtime'
     }
   },
-  devtool: isProduction ? false : 'cheap-module-eval-source-map',
+  devtool: isProduction ? false : 'inline-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, './public'),
     compress: true,
@@ -50,6 +54,8 @@ module.exports = {
     port: 8080,
     publicPath: '/dist/',
     hot: true,
+    open: true,
+    progress: true,
     inline: true,
     historyApiFallback: true,
     noInfo: false,
@@ -66,7 +72,7 @@ module.exports = {
     }
   },
   resolve: {
-    extensions: ['config.js', '.ts', '.tsx', '.js', '.json']
+    extensions: ['.ts', '.tsx', '.js', 'config.js', '.json']
   },
   module: {
     rules: [
@@ -77,8 +83,10 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [
-          'babel-loader'
+          // 'babel-loader'
+          'happypack/loader?id=babel'
         ]
       },
       {
@@ -107,21 +115,22 @@ module.exports = {
           }]
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg|gif|ico|cur)$/,
+        test: /\.(png|jpg|gif|svg|ttf|eot|ico|cur|woff(2)?)(\?[=a-z0-9]+)?$/,
         // use: 'url-loader?limit=1500&name=images/[hash:6].[ext]',
         use: [{
           loader: 'url-loader',
           options: {
             limit: 1500,
             name: 'images/[hash:6].[ext]',
-            publicPath: 'dist'
+            publicPath: 'dist',
+            fallback: 'file-loader'
           }
         }]
       },
-      {
-        test: /\.woff(2)$/,
-        use: 'url-loader?limit=10000&name=fonts/[hash].[ext]&mimetype=application/font-woff'
-      },
+      // {
+      //   test: /\.woff(2)$/,
+      //   use: 'url-loader?limit=10000&name=fonts/[hash].[ext]&mimetype=application/font-woff'
+      // },
       {
         test: /\.(ttf|eot|otf)(\?[\s\S]+)?$/,
         use: [{
@@ -137,6 +146,7 @@ module.exports = {
   },
   target: 'web',
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new OptimizeCss({
       assetNameRegExp: /\.style\.css$/g,
       cssProcessor: require('cssnano'),
@@ -150,6 +160,26 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ] : [
     new CleanWebpackPlugin('./build'),
+    new WebpackParallelUglifyPlugin({
+      uglifyJS: {
+        mangle: false,
+        output: {
+          beautify: false,
+          comments: false
+        },
+        compress: {
+          warnings: false,
+          drop_console: true,
+          collapse_vars: true,
+          reduce_vars: true
+        }
+      }
+    }),
+    new HappyPack({
+      id: 'babel',
+      threads: 4,
+      loaders: ['babel-loader']
+    }),
     new HtmlWebpackPlugin({
       title: 'Summit Web',
       hash: true,
