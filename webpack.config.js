@@ -56,6 +56,13 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true
+    },
+    proxy: {
+      '/api': {
+        target: 'https://randomuser.me',
+        secure: false,
+        changeOrigin: true
+      }
     }
   },
   resolve: {

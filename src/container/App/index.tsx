@@ -2,15 +2,14 @@ import * as React from 'react'
 import { Button } from 'antd'
 import './App.scss'
 // import logo from './logo.svg'
-import MaptalksCom from '../mapComponents/MaptalksCom'
-import Summit from '../Summit'
-import Web from '../Web'
+import MaptalksCom from '../../components/mapComponents/MaptalksCom'
+import Summit from '../../components/Summit'
+import Web from '../../components/Web'
 import FontAwesomeIcon from "@fortawesome/react-fontawesome"
 import fontawesome from "@fortawesome/fontawesome"
 import { faUser } from "@fortawesome/fontawesome-free-solid"
-
 fontawesome.library.add(faUser)
-
+import AjaxTest from '../../components/Ajax'
 interface IState {
   SummitMessage?: string
   WebMessage?: string
@@ -58,6 +57,7 @@ class App extends React.Component<IProps, IState> {
         <Button onClick={this.say}> antd test</Button>
         <Summit message={this.state.SummitMessage} onSay={this.receiveFromSummit}/>
         <h3>分割线哈</h3>
+        <AjaxTest />
         <FontAwesomeIcon icon={faUser} size='2x' style={{color: 'green'}}/>
         <Web message = {this.state.WebMessage} onSendMessage={this.receiveFromWeb}/>
         <MaptalksCom mapStyle={{height: '500px'}} />

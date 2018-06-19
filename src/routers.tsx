@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import IllegalElectromechanicalWell from './container/IllegalElectromechanicalWell'
-import App from './components/App'
+import App from './container/App'
 const Index = () => (
   <Router basename="/">
     {/* <div style={{ height: "100%" }}> */}

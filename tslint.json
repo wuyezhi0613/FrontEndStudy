@@ -50,6 +50,7 @@
     "member-ordering": false,
     "object-literal-sort-keys": false,
     "jsx-boolean-value": false,
-    "no-this-assignment": false
+    "no-this-assignment": false,
+    "prefer-conditional-expression": false
   }
 }
