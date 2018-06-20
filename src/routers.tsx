@@ -41,4 +41,4 @@ const NoMatch = ({ match }) => {
   )
 }
 
-export default Index
+export default Index;
