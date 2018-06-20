@@ -23,9 +23,12 @@
     "lint": "tslint ./src/**/*.tsx",
     "doc": "esdoc"
   },
-  "pre-commit": [
-    "lint"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
+    }
+  },
   "devDependencies": {
     "@types/jest": "^23.0.0",
     "@types/node": "^10.3.2",
@@ -53,6 +56,7 @@
     "happypack": "^5.0.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^1.0.0-rc.9",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "optimize-css-assets-webpack-plugin": "^4.0.2",
@@ -60,7 +64,6 @@
     "postcss-easy-import": "^3.0.0",
     "postcss-flexbugs-fixes": "^3.3.1",
     "postcss-loader": "^2.1.5",
-    "pre-commit": "^1.2.2",
     "precss": "^3.1.2",
     "sass-loader": "^7.0.3",
     "source-map-loader": "^0.2.3",
