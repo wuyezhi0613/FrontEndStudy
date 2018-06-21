@@ -2,6 +2,7 @@ import * as React from 'react'
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom'
 import IllegalElectromechanicalWell from './container/IllegalElectromechanicalWell'
 import App from './container/App'
+
 const Index = () => (
   <Router basename="/">
     <div style={{ height: "100%" }}>
@@ -22,6 +23,7 @@ const Index = () => (
       </div>
       <Switch>
         <Route exact path="/" component={IllegalElectromechanicalWellComp} />
+        {/* <Route render={()=>{}}>ttt</Route> */}
         <Route path="/app" component={App} />
         <Route component={NoMatch} />
       </Switch>

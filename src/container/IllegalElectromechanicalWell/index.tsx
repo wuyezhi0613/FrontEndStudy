@@ -5,7 +5,6 @@ import CSVReader from 'react-csv-reader'
 import * as maptalks from 'maptalks'
 // import logo from'./image/logo.svg'
 interface IState {
-  maptalksMap?: any // maptalks 地图
   hasData?: boolean // 是否已经有csv上传
 }
 
@@ -15,6 +14,7 @@ interface IProps {
 
 export default class IllegalElectromechanicalWell extends React.Component<IProps, IState> {
   uiMarkerList: any[] = []  // uiMarker管理器
+  maptalksMap?: any // maptalks 地图
   constructor(props: IProps) {
     super(props)
     this.state = {
@@ -35,7 +35,11 @@ export default class IllegalElectromechanicalWell extends React.Component<IProps
         const tempMarker = new maptalks.ui.UIMarker([longitude, latitude], {
           draggable: false,
           content: dom
-        }).addTo(self.state.maptalksMap)
+        })
+        .addTo(self.maptalksMap)
+        .on('click', (evt) => {
+          console.log(evt)
+        })
         self.uiMarkerList.push(tempMarker)
       }
     })
@@ -68,9 +72,7 @@ export default class IllegalElectromechanicalWell extends React.Component<IProps
    * @memberof IllegalElectromechanicalWell
    */
   getMap(map) {
-    this.setState({
-      maptalksMap: map
-    })
+    this.maptalksMap = map
   }
   render() {
     return (
