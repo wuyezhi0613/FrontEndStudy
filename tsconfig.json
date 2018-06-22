@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "build/dist",
-    "module": "commonjs",
+    "moduleResolution": "node",
+    "module": "esnext",
     "target": "es5",
     "lib": [
       "es6",
@@ -12,7 +13,6 @@
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
-    "moduleResolution": "node",
     "rootDir": "src/",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -22,7 +22,8 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipDefaultLibCheck": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
   },
   "files": [
     // "./src/@types/index.d.ts"
