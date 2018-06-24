@@ -1,17 +1,8 @@
-import React from 'react'
+import * as React from "react"
+import * as Loadable from "react-loadable"
 
-export default function Loading(props) {
-  if (props.isLoading) {
-    if (props.timedOut) {
-      return <div>Loader timed out!</div>
-    } else if (props.pastDelay) {
-      return <div>Loading...</div>
-    } else {
-      return null
-    }
-  } else if (props.error) {
-    return <div>Error! Component failed to load</div>
-  } else {
-    return null
+export default class MyLoadingComponent extends React.Component<Loadable.LoadingComponentProps> {
+  render() {
+    return <div>Loading...</div>
   }
 }

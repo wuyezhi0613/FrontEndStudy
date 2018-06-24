@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom'
 import IllegalElectromechanicalWell from './container/IllegalElectromechanicalWell'
-// import LoadableApp from './container/App'
-import Loadable from 'react-loadable'
+import DynamicImport from './components/DynamicImport'
+
 const Index = () => (
   <Router basename="/">
     <div style={{ height: "100%" }}>
@@ -24,35 +24,20 @@ const Index = () => (
       <Switch>
         <Route exact path="/" component={IllegalElectromechanicalWellComp} />
         {/* <Route render={()=>{}}>ttt</Route> */}
-        <Route path="/app" component={MyComponent /* the same as <LoadableBar/>*/} />
+        <Route path="/app" component={AppComponent} />
         <Route component={NoMatch} />
       </Switch>
     </div>
   </Router>
 )
 
-/**
- * TODO： react-loadable 代码分割
- */
-function loading () {
-  return <div>Loading...</div>
-}
-const LoadableBar = Loadable({
-  loader: () => import('./container/App/AppSrc'),
-  loading
-})
-
-class MyComponent extends React.Component {
-  render() {
-    return <LoadableBar/>
-  }
-}
-
-// const Test = ({}) => {
-//   return(
-//     <LoadableApp />
-//   )
-// }
+const AppComponent = (props) => (
+  <DynamicImport load={() => import('./container/App/AppSrc')}>
+    {(Component: any) => Component === null
+      ? <p>Loading</p>
+      : <Component {...props} />}
+  </DynamicImport>
+)
 
 const IllegalElectromechanicalWellComp = ({ match }) => {
   return (
