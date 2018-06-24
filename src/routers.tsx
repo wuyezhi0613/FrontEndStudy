@@ -32,7 +32,7 @@ const Index = () => (
 )
 
 const AppComponent = (props) => (
-  <DynamicImport load={() => import('./container/App/AppSrc')}>
+  <DynamicImport load={() => import('./container/App/index')}>
     {(Component: any) => Component === null
       ? <p>Loading</p>
       : <Component {...props} />}
