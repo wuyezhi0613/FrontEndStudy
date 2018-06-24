@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom'
-import IllegalElectromechanicalWell from './container/IllegalElectromechanicalWell'
+// import 'antd/dist/antd.css'
 import DynamicImport from './components/DynamicImport'
-
+import Loading from './components/Loading'
+import NoMatch from './components/NoMatch'
 const Index = () => (
   <Router basename="/">
     <div style={{ height: "100%" }}>
@@ -30,24 +31,22 @@ const Index = () => (
     </div>
   </Router>
 )
-
+// 路由： App
 const AppComponent = (props) => (
   <DynamicImport load={() => import('./container/App/index')}>
     {(Component: any) => Component === null
-      ? <p>Loading</p>
+      ? <Loading />
+      : <Component {...props} />}
+  </DynamicImport>
+)
+// 路由： 非法机电井
+const IllegalElectromechanicalWellComp = (props) => (
+  <DynamicImport load={() => import('./container/IllegalElectromechanicalWell')}>
+    {(Component: any) => Component === null
+      ? <Loading />
       : <Component {...props} />}
   </DynamicImport>
 )
 
-const IllegalElectromechanicalWellComp = ({ match }) => {
-  return (
-    <IllegalElectromechanicalWell />
-  )
-}
-const NoMatch = ({ match }) => {
-  return (
-    <h2 style={{ textAlign: 'center' }}>4000000000000000000000.............4...........<br />请选择正确的路由。。。</h2>
-  )
-}
 
 export default Index
