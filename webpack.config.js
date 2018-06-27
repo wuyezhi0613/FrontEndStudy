@@ -97,7 +97,15 @@ module.exports = {
         use: [
           'css-hot-loader',
           MiniCssExtractPlugin.loader,
-          'css-loader?importLoaders=1&localIdentName=[local]_[hash:base64:6]',
+          // 'css-loader?importLoaders=1&localIdentName=[local]_[hash:base64:6]',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              localIdentName: '[local]_[hash:base64:6]',
+              minimize: true
+            }
+          },
           {
             loader: 'postcss-loader',
             options: {
