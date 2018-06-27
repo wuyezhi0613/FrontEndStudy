@@ -1,14 +1,13 @@
-const isProduction = process.argv.indexOf('production') > 0
+const isProduction = process.env.NODE_ENV === 'production'
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCss = require('optimize-css-assets-webpack-plugin')
+// const OptimizeCss = require('optimize-css-assets-webpack-plugin')
 const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const HappyPack = require('happypack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
 module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
@@ -21,7 +20,7 @@ module.exports = {
     publicPath: '/dist/'
   },
   optimization: {
-    minimizer: [new OptimizeCss({})],
+    // minimizer: [new OptimizeCss({})],
     splitChunks: {
       chunks: 'all',
       minSize: 30000, // 模块大于30k会被抽离到公共模块
@@ -156,17 +155,15 @@ module.exports = {
   target: 'web',
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new OptimizeCss({
-      assetNameRegExp: /\.style\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorOptions: { discardComments: { removeAll: true } },
-      canPrint: true
-    }),
+    // new OptimizeCss({
+    //   assetNameRegExp: /\.style\.css$/g,
+    //   cssProcessor: require('cssnano'),
+    //   cssProcessorOptions: { discardComments: { removeAll: true } },
+    //   canPrint: true
+    // }),
     new MiniCssExtractPlugin({
       filename: 'style/[name].css'
-    })
-  ].concat(!isProduction ? [
-    new webpack.HotModuleReplacementPlugin(),
+    }),
     new BundleAnalyzerPlugin(
       {
         analyzerMode: 'server',
@@ -180,6 +177,8 @@ module.exports = {
         statsOptions: null,
         logLevel: 'info'
       })
+  ].concat(!isProduction ? [
+    new webpack.HotModuleReplacementPlugin()
   ] : [
     new CleanWebpackPlugin('./build'),
     new WebpackParallelUglifyPlugin({
