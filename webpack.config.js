@@ -4,7 +4,6 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const OptimizeCss = require('optimize-css-assets-webpack-plugin')
 const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const HappyPack = require('happypack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -20,7 +19,6 @@ module.exports = {
     publicPath: '/dist/'
   },
   optimization: {
-    // minimizer: [new OptimizeCss({})],
     splitChunks: {
       chunks: 'all',
       minSize: 30000, // 模块大于30k会被抽离到公共模块
@@ -155,12 +153,6 @@ module.exports = {
   target: 'web',
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
-    // new OptimizeCss({
-    //   assetNameRegExp: /\.style\.css$/g,
-    //   cssProcessor: require('cssnano'),
-    //   cssProcessorOptions: { discardComments: { removeAll: true } },
-    //   canPrint: true
-    // }),
     new MiniCssExtractPlugin({
       filename: 'style/[name].css'
     }),
