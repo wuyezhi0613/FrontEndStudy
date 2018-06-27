@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCss = require('optimize-css-assets-webpack-plugin')
 const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const HappyPack = require('happypack')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
@@ -157,7 +158,20 @@ module.exports = {
       filename: 'style/[name].css'
     })
   ].concat(!isProduction ? [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new BundleAnalyzerPlugin(
+      {
+        analyzerMode: 'server',
+        analyzerHost: '127.0.0.1',
+        analyzerPort: 8889,
+        reportFilename: 'report.html',
+        defaultSizes: 'parsed',
+        openAnalyzer: true,
+        generateStatsFile: false,
+        statsFilename: 'stats.json',
+        statsOptions: null,
+        logLevel: 'info'
+      })
   ] : [
     new CleanWebpackPlugin('./build'),
     new WebpackParallelUglifyPlugin({
