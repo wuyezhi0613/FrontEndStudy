@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-do
 import DynamicImport from './components/DynamicImport'
 import Loading from './components/Loading'
 import NoMatch from './components/NoMatch'
+
+// import LoadableDashboard from './container/test'
+
 const Index = () => (
   <Router basename="/">
     <div style={{ height: "100%" }}>
