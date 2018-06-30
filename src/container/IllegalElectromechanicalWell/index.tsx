@@ -77,10 +77,10 @@ export default class IllegalElectromechanicalWell extends React.Component<IProps
   render() {
     return (
       <div className='maptalksContainer'>
-        <MaptalksCom isArcGISLayer mapStyle={{ height: "100%", width: '100%' }} onCreate={this.getMap} />
+        <MaptalksCom isArcGISLayer mapStyle={{ height: '100%', width: '100%' }} onCreate={this.getMap} />
         <CSVReader
-          cssClass="react-csv-input"
-          label="选择您的非法机电井csv数据   "
+          cssClass='react-csv-input'
+          label='选择您的非法机电井csv数据   '
           onFileLoaded={this.handleLoadedFile}
         />
       </div>

@@ -14,6 +14,7 @@
     //   ]
     // },
     "semicolon": [true, "never"],
+    "quotemark": [true, "single", "avoid-escape", "avoid-template"],
     "new-parens": true,
     "no-arg": true,
     "no-bitwise": true,
@@ -25,7 +26,7 @@
       true,
       "antd/dist/antd.css",
       "maptalks/dist/maptalks.css",
-      "@fortawesome/fontawesome-free-solid"
+      "react-icons/lib/fa"
     ],
     "one-line": [
       true,

@@ -8,27 +8,27 @@ import NoMatch from './components/NoMatch'
 // import LoadableDashboard from './container/test'
 
 const Index = () => (
-  <Router basename="/">
-    <div style={{ height: "100%" }}>
+  <Router basename='/'>
+    <div style={{ height: '100%' }}>
       {/* 预留菜单栏 */}
       <div>
         <NavLink
-          to="/"
+          to='/'
           activeStyle={{ color: 'green', fontWeight: 'bold' }}
         >home</NavLink>
         <NavLink
-          to="/app"
+          to='/app'
           activeStyle={{ color: 'red', fontWeight: 'bold' }}
         >app</NavLink>
         <NavLink
-          to="/test"
+          to='/test'
           activeStyle={{ color: 'blue', fontWeight: 'bold' }}
         >no match</NavLink>
       </div>
       <Switch>
-        <Route exact path="/" component={IllegalElectromechanicalWellComp} />
+        <Route exact path='/' component={IllegalElectromechanicalWellComp} />
         {/* <Route render={()=>{}}>ttt</Route> */}
-        <Route path="/app" component={AppComponent} />
+        <Route path='/app' component={AppComponent} />
         <Route component={NoMatch} />
       </Switch>
     </div>

@@ -61,7 +61,7 @@ export default class Web extends React.Component<IProps, IState> {
       <div>
         <div>收到消息: {receivedMessage}</div>
         <div>
-          <input type="text" onChange={this.getValue} />
+          <input type='text' onChange={this.getValue} />
           <Button onClick={this.sendMessage}>发送</Button>
         </div>
       </div>

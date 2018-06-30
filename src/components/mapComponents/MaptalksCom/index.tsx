@@ -33,7 +33,7 @@ export default class MaptalksCom extends React.Component<IProps, IState> {
     }
     // 地图默认样式
     const mapDefaultStyle: any = {
-      height: "500px", width: '100%'
+      height: '500px', width: '100%'
     }
     this.state = {
       mapOptions: Object.assign({}, ...mapDefaultOptions, this.props.mapOptions),
@@ -99,7 +99,7 @@ export default class MaptalksCom extends React.Component<IProps, IState> {
           resolve(new maptalks.Map(this.mapContainer, this.state.mapOptions))
         }
       } else {
-        reject("Invalid map container div")
+        reject('Invalid map container div')
       }
     })
   }

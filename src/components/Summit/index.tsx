@@ -48,7 +48,7 @@ export default class Summit extends React.Component<IProps, IState> {
     return (
       <div>
         <div>收到消息：{receiveMessage}</div>
-        <input type="text" onChange= {this.getValue}/>
+        <input type='text' onChange= {this.getValue}/>
         <Button onClick={this.sendMessage}>发送</Button>
       </div>
     )
