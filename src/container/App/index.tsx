@@ -56,7 +56,7 @@ class App extends React.Component<IProps, IState> {
         <Summit message={this.state.SummitMessage} onSay={this.receiveFromSummit}/>
         <h3>分割线哈</h3>
         <AjaxTest />
-        <h3> Lets go for a <FaBeer />? </h3>
+        <h3> Lets go for a <FaBeer size={40} color='#a24b' />? </h3>
         <Web message = {this.state.WebMessage} onSendMessage={this.receiveFromWeb}/>
         <MaptalksCom mapStyle={{height: '500px'}} />
       </div>
