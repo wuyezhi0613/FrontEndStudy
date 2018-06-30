@@ -5,7 +5,7 @@ import './App.scss'
 import MaptalksCom from '../../components/mapComponents/MaptalksCom'
 import Summit from '../../components/Summit'
 import Web from '../../components/Web'
-import * as FontAwesome from 'react-icons/lib/fa'
+import FaBeer from 'react-icons/lib/fa/beer'
 
 import AjaxTest from '../../components/Ajax'
 interface IState {
@@ -56,7 +56,7 @@ class App extends React.Component<IProps, IState> {
         <Summit message={this.state.SummitMessage} onSay={this.receiveFromSummit}/>
         <h3>分割线哈</h3>
         <AjaxTest />
-        <h3> Lets go for a <FontAwesome.FaBeer />? </h3>
+        <h3> Lets go for a <FaBeer />? </h3>
         <Web message = {this.state.WebMessage} onSendMessage={this.receiveFromWeb}/>
         <MaptalksCom mapStyle={{height: '500px'}} />
       </div>
