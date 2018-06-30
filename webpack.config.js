@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const HappyPack = require('happypack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
@@ -152,6 +153,11 @@ module.exports = {
   },
   target: 'web',
   plugins: [
+    new ProgressBarPlugin({
+      format: 'build [:bar] :percent (:elapsed seconds)',
+      clear: false,
+      width: 60
+    }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new MiniCssExtractPlugin({
       filename: 'style/[name].css'
