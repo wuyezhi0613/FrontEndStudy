@@ -127,7 +127,7 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
-            limit: 1500,
+            limit: 4 * 1024,
             name: 'images/[hash:6].[ext]',
             publicPath: 'dist',
             fallback: 'file-loader'

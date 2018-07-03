@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default class IllegalElectromechanicalWell extends React.Component<IProps, IState> {
-  uiMarkerList: any[] = []  // uiMarker管理器
+  stationLayer: any // 非法机电井图层
   maptalksMap?: any // maptalks 地图
   constructor(props: IProps) {
     super(props)
@@ -30,17 +30,27 @@ export default class IllegalElectromechanicalWell extends React.Component<IProps
       const longitude = parseFloat(item[9])
       const latitude = parseFloat(item[10])
       if (longitude && latitude) {
-        const dom = document.createElement('div')
-        dom.innerHTML = `<img  src=${require('./image/jidianjin.gif')}>`
-        const tempMarker = new maptalks.ui.UIMarker([longitude, latitude], {
-          draggable: false,
-          content: dom
+        const marker = new maptalks.Marker([longitude, latitude], {
+          // 'id' : 'marker0',
+          'symbol' : {
+              'markerFile'  : require('./image/logo.svg'),
+              'markerWidth' : 30,
+              'markerHeight': 30,
+          },
+          'properties' : {
+              'foo' : 'value'
+          }
+        }).addTo(self.stationLayer)
+        marker.setInfoWindow({
+          'title': 'Marker\'s InfoWindow',
+          'content': `<div>Click on marker${latitude} to open.</div>`,
+          // 'autoPan': true,
+          // 'width': 300,
+          // 'minHeight': 120,
+          // 'custom': false,
+          'autoOpenOn' : 'click',  // set to null if not to open when clicking on marker
+          'autoCloseOn' : 'click'
         })
-        .addTo(self.maptalksMap)
-        .on('click', (evt) => {
-          console.log(evt)
-        })
-        self.uiMarkerList.push(tempMarker)
       }
     })
   }
@@ -52,17 +62,15 @@ export default class IllegalElectromechanicalWell extends React.Component<IProps
    */
   handleLoadedFile(dataList) {
     if (this.state.hasData) {
-      this.uiMarkerList.map(item => {
-        item.remove()
-      })
-      this.uiMarkerList.splice(0, this.uiMarkerList.length)
+      this.stationLayer.remove()
     }
+    this.stationLayer = new maptalks.VectorLayer('stationLayer').addTo(this.maptalksMap)
     if (dataList && dataList.length > 0) {
       this.setState({
         hasData: true
       }, () => {
         this.addIllegalElectromechanicalWellToMap(dataList)
-      })      
+      })
     }
   }
   /**
