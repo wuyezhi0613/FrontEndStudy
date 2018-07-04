@@ -123,13 +123,12 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg|ttf|eot|ico|cur|woff(2)?)(\?[=a-z0-9]+)?$/,
-        // use: 'url-loader?limit=1500&name=images/[hash:6].[ext]',
+        // use: 'url-loader?limit=1000&name=dist/images/[hash:6].[ext]'
         use: [{
           loader: 'url-loader',
           options: {
-            limit: 4 * 1024,
-            name: 'images/[hash:6].[ext]',
-            publicPath: 'dist',
+            limit: 1 * 1024,
+            name: 'dist/images/[hash:6].[ext]',
             fallback: 'file-loader'
           }
         }]
